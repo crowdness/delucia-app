@@ -5,8 +5,10 @@ version 1.0.0.
 
 ## After initial checkout
 
+```
 bower install
 sudo npm install
+```
 
 ## Build & development
 
@@ -18,6 +20,8 @@ Running `grunt test` will run the unit tests with karma.
 
 ## Firebase Hosting
 
+```
 sudo npm install -g firebase-tools
 firebase login
 firebase deploy
+```
