@@ -11,12 +11,12 @@
 
     <p class="form-group">
       <label>Name:</label>
-      <input type="text" name="name" ng-model="profile.name" class="form-control" />
+      <input type="text" name="name" ng-model="profile.displayName" class="form-control" />
     </p>
 
-    <p class="form-group">
+    <p class="form-group" ng-show="{{user.provider === 'password'}}">
       <label>Email:</label>
-      <br />{{profile.email}}
+      <br />{{user.password.email}}
     </p>
   </form>
 
