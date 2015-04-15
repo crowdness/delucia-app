@@ -1,25 +1,38 @@
 <h2>Login Page</h2>
-<form role="form">
-    <p class="form-group">
+<form name="frm" role="form" novalidate ng-init="createMode = false">
+    <p class="form-group" ng-class="{'has-error': frm.submitted && frm.email.$invalid}">
         <label for="loginEmail">email</label>
         <input id="loginEmail" required name="email" type="email" ng-model="email" class="form-control" />
+        <span class="help-block" ng-show="frm.submitted && frm.email.$error.required">Please enter an email</span>
+        <span class="help-block" ng-show="frm.submitted && frm.email.$error.email">Invalid email</span>
     </p>
-    <p class="form-group">
+    <p class="form-group" ng-class="{'has-error': frm.submitted && frm.pass.$invalid}">
         <label for="loginPass">password</label>
         <input id="loginPass" required name="pass" type="password" ng-model="pass" class="form-control" />
+        <span class="help-block" ng-show="frm.submitted && frm.pass.$error.required">Please enter a password</span>
     </p>
-    <p class="form-group" ng-cloak ng-show="createMode">
+    <p class="form-group" ng-cloak ng-show="createMode" ng-class="{'has-error': frm.submitted && frm.confirm.$invalid}">
         <label for="loginConfirm">confirm pass</label>
-        <input id="loginConfirm" ng-required="createMode" name="confirmPass" type="password" ng-model="confirm" class="form-control" />
+        <input id="loginConfirm" ng-required="createMode" name="confirm" type="password" ng-model="confirm" class="form-control" match="pass" ng-if="createMode"/>
+        <span class="help-block" ng-show="frm.submitted && frm.confirm.$error.required">Please re-type the password</span>
+        <span class="help-block" ng-show="frm.submitted && !frm.confirm.$error.required && frm.confirm.$error.match">Passwords do not match</span>
     </p>
-    <p>
-        <button class="btn btn-primary" ng-click="passwordLogin(email, pass)" ng-hide="createMode">Log In</button>
-        <button class="btn btn-default" ng-click="createMode = true" ng-hide="createMode">Register</button>
-        <a href="" class="btn btn-primary" ng-cloak ng-show="createMode" ng-click="createAccount(email, pass, confirm)">Create Account</a>
-        <button class="btn btn-default" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
+    <p ng-hide="createMode">
+        <button class="btn btn-primary" ng-click="$parent.passwordLogin($parent.email, $parent.pass)" ng-if="!createMode">Log In</button>
+        <a href="" class="btn btn-default" ng-click="createMode = true">Register</a>
+    </p>
+    <p ng-cloak ng-show="createMode">
+        <button class="btn btn-primary" ng-click="createAccount(email, pass, confirm)" type="submit">Create Account</button>
+        <a href="" class="btn btn-default" ng-click="createMode = false">Cancel</a>
     </p>
 </form>
-<p ng-show="err" class="bg-danger">{{err}}</p>
+<p style="display: none;">{{err}}</p>
+<div ng-show="err" class="alert alert-danger" role="alert">
+    <p ng-show="err.code === 'INVALID_USER' || err.code === 'INVALID_EMAIL'">User doesn't exist</p>
+    <p ng-show="err.code === 'INVALID_PASSWORD'">Wrong credentials</p>
+    <p ng-show="err.code === 'EMAIL_TAKEN'">The email is taken</p>
+    <p ng-show="!err.code">{{err}}</p>
+</div>
 <fieldset>
     <legend>Oauth</legend>
     <p>

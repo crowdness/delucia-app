@@ -19,5 +19,6 @@ angular.module('deluciaApp', [
     'ngTouch',
     'firebase',
     'firebase.ref',
-    'firebase.auth'
+    'firebase.auth',
+    'validation.match'
   ]);

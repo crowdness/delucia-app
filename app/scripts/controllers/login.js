@@ -11,8 +11,10 @@ angular.module('deluciaApp')
         $scope.oauthLogin = function(provider) {
             $scope.err = null;
             Auth.$authWithOAuthPopup(provider, {
-                rememberMe: true
-            }).then(redirect, showError);
+                    rememberMe: true
+                })
+                .then(createProfile)
+                .then(redirect, showError);
         };
 
         $scope.anonymousLogin = function() {
@@ -24,23 +26,26 @@ angular.module('deluciaApp')
 
         $scope.passwordLogin = function(email, pass) {
             $scope.err = null;
-            Auth.$authWithPassword({
-                email: email,
-                password: pass
-            }, {
-                rememberMe: true
-            }).then(
-                redirect, showError
-            );
+            $scope.frm.submitted = true;
+            if ($scope.frm.$valid) {
+                $scope.frm.submitted = false;
+
+                Auth.$authWithPassword({
+                    email: email,
+                    password: pass
+                }, {
+                    rememberMe: true
+                }).then(
+                    redirect, showError
+                );
+            }
         };
 
-        $scope.createAccount = function(email, pass, confirm) {
+        $scope.createAccount = function(email, pass) {
             $scope.err = null;
-            if (!pass) {
-                $scope.err = 'Please enter a password';
-            } else if (pass !== confirm) {
-                $scope.err = 'Passwords do not match';
-            } else {
+            $scope.frm.submitted = true;
+            if ($scope.frm.$valid) {
+                $scope.frm.submitted = false;
                 Auth.$createUser({
                         email: email,
                         password: pass
@@ -57,7 +62,6 @@ angular.module('deluciaApp')
                     .then(createProfile)
                     .then(redirect, showError);
             }
-
         };
 
         // find a suitable name based on the meta info given by each provider
@@ -75,6 +79,7 @@ angular.module('deluciaApp')
         }
 
         function createProfile(user) {
+            console.log(user);
             var ref = Ref.child('users').child(user.uid),
                 def = $q.defer();
             ref.set({
@@ -104,14 +109,13 @@ angular.module('deluciaApp')
 
 
 
-        function redirect(userData) {
-            createProfile(userData).then(function() {
-                $location.path('/account');
-            });
+        function redirect() {
+            $location.path('/account');
         }
 
         function showError(err) {
             $scope.err = err;
+            throw new Error();
         }
 
 
