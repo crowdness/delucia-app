@@ -86,6 +86,7 @@ angular.module('deluciaApp')
 .run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath',
     function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath) {
         $rootScope.location = $location;
+        $rootScope.Auth = Auth;
 
         // watch for login status changes and redirect if appropriate
         Auth.$onAuth(check);
