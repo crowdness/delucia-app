@@ -1,61 +1,52 @@
-
 <div class="row-fluid">
-<div class="{{user.provider === 'password'? 'col-md-5' : 'col-md-12'}}">
-  <h3>Profile</h3>
-
-  <form role="form" name="profileForm" novalidate>
-    <!-- <p class="form-group">
+    <div class="{{user.provider === 'password'? 'col-md-5' : 'col-md-12'}}">
+        <h3>Profile</h3>
+        <form role="form" name="profileForm" novalidate>
+            <!-- <p class="form-group">
       <label>Account ID</label>
       <br />{{user.uid}}
     </p> -->
-
-    <p class="form-group" ng-class="{'has-error': profileForm.submitted && profileForm.displayName.$invalid}">
-      <label>Display Name:</label>
-      <input type="text" name="displayName" ng-model="profile.displayName" class="form-control" required />
-      <span class="help-block" ng-show="profileForm.submitted && profileForm.displayName.$error.required">Please enter a display name</span>
-    </p>
-    <p>
-      <button class="btn btn-default" ng-click="updateProfile()">Update</button>
-    </p>
-
-    <p class="form-group" ng-show="{{user.provider === 'password'}}">
-      <label>Email:</label>
-      <br />{{user.password.email}}
-    </p>
-  </form>
-
-  <!-- <p>
+            <p class="form-group" ng-class="{'has-error': profileForm.submitted && profileForm.displayName.$invalid}">
+                <label>Display Name:</label>
+                <input type="text" name="displayName" ng-model="profile.displayName" class="form-control" required />
+                <span class="help-block" ng-show="profileForm.submitted && profileForm.displayName.$error.required">Please enter a display name</span>
+            </p>
+            <p>
+                <button class="btn btn-default" ng-click="updateProfile()">Update</button>
+            </p>
+            <p class="form-group" ng-show="{{user.provider === 'password'}}">
+                <label>Email:</label>
+                <br />{{user.password.email}}
+            </p>
+        </form>
+        <!-- <p>
     <button role="button" ng-click="logout()" class="btn btn-danger">Log Out</button>
   </p> -->
-</div>
-
-<div class="col-md-5 col-md-offset-2" ng-show="{{user.provider === 'password'}}">
-<form role="form">
-  <h3>Change Password</h3>
-
-  <p class="form-group">
-    <label>Old Password:</label>
-    <input type="password" ng-keypress="clear()" ng-model="oldpass" class="form-control" />
-  </p>
-
-  <p class="form-group">
-    <label>New Password:</label>
-    <input type="password" ng-keypress="clear()" ng-model="newpass" class="form-control" />
-  </p>
-
-  <p class="form-group">
-    <label>Confirm New Password:</label>
-    <input type="password" ng-keypress="clear()" ng-model="confirm" class="form-control" />
-  </p>
-
-  <button class="btn btn-primary" ng-click="changePassword(oldpass, newpass, confirm)">change password</button>
-
-  <p class="error" ng-show="err">{{err}}</p>
-  <p class="good" ng-show="msg">{{msg}}</p>
-</form>
-</div>
-
-<!-- <div class="col-md-4" ng-show="{{user.provider === 'password'}}">
+    </div>
+    <div class="col-md-5 col-md-offset-2" ng-show="{{user.provider === 'password'}}">
+        <form role="form" name="passwordForm" novalidate>
+            <h3>Change Password</h3>
+            <p class="form-group" ng-class="{'has-error': passwordForm.submitted && passwordForm.oldpass.$invalid}">
+                <label>Old Password:</label>
+                <input type="password" ng-keypress="clear()" name="oldpass" ng-model="oldpass" class="form-control" required />
+                <span class="help-block" ng-show="passwordForm.submitted && passwordForm.oldpass.$error.required">Please enter old password</span>
+            </p>
+            <p class="form-group" ng-class="{'has-error': passwordForm.submitted && passwordForm.newpass.$invalid}">
+                <label>New Password:</label>
+                <input type="password" ng-keypress="clear()" name="newpass" ng-model="newpass" class="form-control" required />
+                <span class="help-block" ng-show="passwordForm.submitted && passwordForm.newpass.$error.required">Please enter new password</span>
+            </p>
+            <p class="form-group" ng-class="{'has-error': passwordForm.submitted && passwordForm.confirm.$invalid}">
+                <label>Confirm New Password:</label>
+                <input type="password" ng-keypress="clear()" name="confirm" ng-model="confirm" class="form-control" match="newpass" />
+                <span class="help-block" ng-show="passwordForm.submitted && passwordForm.confirm.$error.match">Passwords do not match</span>
+            </p>
+            <button class="btn btn-primary" ng-click="changePassword(oldpass, newpass, confirm)">change password</button>
+            <p class="error" ng-show="err">{{err}}</p>
+            <p class="good" ng-show="msg">{{msg}}</p>
+        </form>
+    </div>
+    <!-- <div class="col-md-4" ng-show="{{user.provider === 'password'}}">
 <form>
   <h3>Change Email</h3>
 
@@ -72,7 +63,8 @@
   <button class="btn btn-primary" ng-click="changeEmail(pass, newEmail)">update email</button>
 </form>
 </div> -->
-
 </div>
 <p class="clearfix"></p>
-<div ng-repeat="message in messages" class="alert alert-{{message.type}}">{{message.text}}</div>
+<div class="col-xs-12">
+    <div ng-repeat="message in messages" class="alert alert-{{message.type}}">{{message.text}}</div>
+</div>

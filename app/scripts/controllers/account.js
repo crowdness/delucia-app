@@ -25,20 +25,20 @@ angular.module('deluciaApp')
             }
         };
 
-        $scope.changePassword = function(oldPass, newPass, confirm) {
+        $scope.changePassword = function(oldPass, newPass) {
             $scope.err = null;
-            if (!oldPass || !newPass) {
-                error('Please enter all fields');
-            } else if (newPass !== confirm) {
-                error('Passwords do not match');
-            } else {
+            $scope.passwordForm.submitted = true;
+            if ($scope.passwordForm.$valid) {
+                $scope.passwordForm.submitted = false;
+
                 Auth.$changePassword({
-                        email: profile.email,
+                        email: user.password.email,
                         oldPassword: oldPass,
                         newPassword: newPass
                     })
                     .then(function() {
                         success('Password changed');
+                        $scope.oldpass = $scope.newpass = $scope.confirm = '';
                     }, error);
             }
         };
@@ -74,7 +74,7 @@ angular.module('deluciaApp')
             $scope.messages.unshift(obj);
             $timeout(function() {
                 $scope.messages.splice($scope.messages.indexOf(obj), 1);
-            }, 10000);
+            }, 5000);
         }
 
     });
