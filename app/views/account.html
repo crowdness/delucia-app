@@ -1,17 +1,21 @@
 
 <div class="row-fluid">
-<div class="{{user.provider === 'password'? 'col-md-4' : 'col-md-12'}}">
+<div class="{{user.provider === 'password'? 'col-md-5' : 'col-md-12'}}">
   <h3>Profile</h3>
 
-  <form role="form">
-    <p class="form-group">
+  <form role="form" name="profileForm" novalidate>
+    <!-- <p class="form-group">
       <label>Account ID</label>
       <br />{{user.uid}}
-    </p>
+    </p> -->
 
-    <p class="form-group">
-      <label>Name:</label>
-      <input type="text" name="name" ng-model="profile.displayName" class="form-control" />
+    <p class="form-group" ng-class="{'has-error': profileForm.submitted && profileForm.displayName.$invalid}">
+      <label>Display Name:</label>
+      <input type="text" name="displayName" ng-model="profile.displayName" class="form-control" required />
+      <span class="help-block" ng-show="profileForm.submitted && profileForm.displayName.$error.required">Please enter a display name</span>
+    </p>
+    <p>
+      <button class="btn btn-default" ng-click="updateProfile()">Update</button>
     </p>
 
     <p class="form-group" ng-show="{{user.provider === 'password'}}">
@@ -20,12 +24,12 @@
     </p>
   </form>
 
-  <p>
+  <!-- <p>
     <button role="button" ng-click="logout()" class="btn btn-danger">Log Out</button>
-  </p>
+  </p> -->
 </div>
 
-<div class="col-md-4" ng-show="{{user.provider === 'password'}}">
+<div class="col-md-5 col-md-offset-2" ng-show="{{user.provider === 'password'}}">
 <form role="form">
   <h3>Change Password</h3>
 
@@ -51,7 +55,7 @@
 </form>
 </div>
 
-<div class="col-md-4" ng-show="{{user.provider === 'password'}}">
+<!-- <div class="col-md-4" ng-show="{{user.provider === 'password'}}">
 <form>
   <h3>Change Email</h3>
 
@@ -67,7 +71,7 @@
 
   <button class="btn btn-primary" ng-click="changeEmail(pass, newEmail)">update email</button>
 </form>
-</div>
+</div> -->
 
 </div>
 <p class="clearfix"></p>
