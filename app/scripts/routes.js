@@ -68,6 +68,10 @@ angular.module('deluciaApp')
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
         })
+        .when('/reset-password', {
+            templateUrl: 'views/reset-password.html',
+            controller: 'ResetPasswordCtrl'
+        })
         .whenAuthenticated('/account', {
             templateUrl: 'views/account.html',
             controller: 'AccountCtrl'

@@ -20,6 +20,7 @@
     <p ng-hide="createMode">
         <button class="btn btn-primary" ng-click="$parent.passwordLogin($parent.email, $parent.pass)" ng-if="!createMode">Log In</button>
         <a href="" class="btn btn-default" ng-click="createMode = true">Register</a>
+        <a href="/reset-password" class="btn btn-link pull-right">Forgot password?</a>
     </p>
     <p ng-cloak ng-show="createMode">
         <button class="btn btn-primary" ng-click="createAccount(email, pass, confirm)" type="submit">Create Account</button>
