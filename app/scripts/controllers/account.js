@@ -21,7 +21,12 @@ angular.module('deluciaApp')
             $scope.profileForm.submitted = true;
             if ($scope.profileForm.$valid) {
                 $scope.profileForm.submitted = false;
-                $scope.profile.$save();
+                $scope.profile.$save().then(function() {
+                    $scope.profileForm.result = 'Success!';
+                    $timeout(function(){
+                        delete $scope.profileForm.result;
+                    }, 2000);
+                });
             }
         };
 

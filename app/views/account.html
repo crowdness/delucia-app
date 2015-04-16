@@ -12,7 +12,7 @@
                 <span class="help-block" ng-show="profileForm.submitted && profileForm.displayName.$error.required">Please enter a display name</span>
             </p>
             <p>
-                <button class="btn btn-default" ng-click="updateProfile()">Update</button>
+                <button class="btn btn-default" ng-click="updateProfile()">Update</button>&nbsp;&nbsp;<span class="help-inline text-success" ng-show="profileForm.result">{{profileForm.result}}</span>
             </p>
             <p class="form-group" ng-show="{{user.provider === 'password'}}">
                 <label>Email:</label>
