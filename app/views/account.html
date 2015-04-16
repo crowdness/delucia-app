@@ -6,6 +6,14 @@
       <label>Account ID</label>
       <br />{{user.uid}}
     </p> -->
+            <p>
+                <label>Logged in using:</label>
+                <input type="text" value="{{user.provider | camel}}" class="form-control" readonly/>
+            </p>
+            <p class="form-group" ng-show="{{user.provider === 'password'}}">
+                <label>Email:</label>
+                <br />{{user.password.email}}
+            </p>
             <p class="form-group" ng-class="{'has-error': profileForm.submitted && profileForm.displayName.$invalid}">
                 <label>Display Name:</label>
                 <input type="text" name="displayName" ng-model="profile.displayName" class="form-control" required />
@@ -13,10 +21,6 @@
             </p>
             <p>
                 <button class="btn btn-default" ng-click="updateProfile()">Update</button>&nbsp;&nbsp;<span class="help-inline text-success" ng-show="profileForm.result">{{profileForm.result}}</span>
-            </p>
-            <p class="form-group" ng-show="{{user.provider === 'password'}}">
-                <label>Email:</label>
-                <br />{{user.password.email}}
             </p>
         </form>
         <!-- <p>
