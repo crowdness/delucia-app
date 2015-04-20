@@ -76,6 +76,10 @@ angular.module('deluciaApp')
             templateUrl: 'views/account.html',
             controller: 'AccountCtrl'
         })
+        .whenAuthenticated('/new-lesson', {
+          templateUrl: 'views/new-lesson.html',
+          controller: 'NewLessonCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });
