@@ -1,0 +1,6 @@
+<h2 ng-cloak ng-show="err">{{err}}</h2>
+<h2>{{lesson.title}}</h2>
+<p class="lead">{{lesson.description}}</p>
+<p>
+    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': videoId == $parent.videoId}" href="/lessons/{{lessonId}}/videos/{{videoId}}" ng-repeat="(videoId, video) in lesson.videos">{{video.language.name}}</a>
+</p>

@@ -80,6 +80,14 @@ angular.module('deluciaApp')
           templateUrl: 'views/new-lesson.html',
           controller: 'NewLessonCtrl'
         })
+        .when('/lessons/:lessonId', {
+          templateUrl: 'views/lesson-detail.html',
+          controller: 'LessonDetailCtrl'
+        })
+        .when('/lessons/:lessonId/videos/:videoId', {
+          templateUrl: 'views/lesson-detail.html',
+          controller: 'LessonDetailCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });

@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('NewLessonCtrl', function($scope, Ref, user) {
+    .controller('NewLessonCtrl', function($scope, Ref, user, $location) {
         $scope.languages = [{
             code: 'en',
             name: 'English'
@@ -19,24 +19,25 @@ angular.module('deluciaApp')
         };
 
         $scope.submit = function() {
+            delete $scope.err;
             if ($scope.frm.$valid) {
                 $scope.lesson.author = user.uid;
                 $scope.video.author = user.uid;
-                
-                console.log($scope.lesson, $scope.video);
+
                 var lessonsRef = Ref.child('lessons');
-                var lessonRef = lessonsRef.push($scope.lesson, function(err){
-                    if(err){
-                        window.alert(err);
+                var lessonRef = lessonsRef.push($scope.lesson, function(err) {
+                    if (err) {
+                        $scope.err = err;
                         return;
                     }
-                    console.log(lessonRef);
-                    lessonRef.child('videos').push($scope.video, function(err){
-                        if(err){
-                            window.alert(err);
+                    lessonRef.child('videos').push($scope.video, function(err) {
+                        if (err) {
+                            $scope.err = err;
                             return;
                         }
-                        window.alert('success');
+                        $scope.$apply(function() {
+                            $location.path('/lessons/' + lessonRef.key());
+                        });
                     });
                 });
             }

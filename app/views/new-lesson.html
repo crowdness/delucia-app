@@ -15,5 +15,6 @@
     <div class="form-group">
         <button class="btn btn-primary" ng-click="submit()" ng-disabled="frm.$invalid">Submit</button>&nbsp;
         <span class="text-info" ng-show="frm.$invalid">Please fill in all fields properly</span>
+        <span class="text-danger" ng-show="err">{{err}}</span>
     </div>
 </form>
