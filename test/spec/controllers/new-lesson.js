@@ -12,7 +12,8 @@ describe('Controller: NewLessonCtrl', function () {
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
     NewLessonCtrl = $controller('NewLessonCtrl', {
-      $scope: scope
+      $scope: scope,
+      user: {}
     });
   }));
 
