@@ -1,6 +1,10 @@
 <h2>Latest Lessons</h2>
+<p ng-hide="lessons.length">Loading...</p>
 <ul class="list-unstyled">
     <li ng-repeat="lesson in lessons">
-        <p><a href="/l/{{lesson.$id}}/{{lesson.title | safeTitle}}">{{lesson.title}}</a></p>
+        <p class="lead">
+            <a href="/l/{{lesson.$id}}/{{lesson.title | safeTitle}}">{{lesson.title}}</a>
+            <span class="label label-default" ng-repeat="video in lesson.videos">{{video.language.name}}</span>
+        </p>
     </li>
 </ul>
