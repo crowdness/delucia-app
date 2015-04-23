@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('NewLessonCtrl', function($scope, Ref, user, $location) {
+    .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter) {
         $scope.languages = [{
             code: 'en',
             name: 'English'
@@ -39,7 +39,7 @@ angular.module('deluciaApp')
                             defaultVideoId: videoRef.key()
                         });
                         $scope.$apply(function() {
-                            $location.path('/lessons/' + lessonRef.key());
+                            $location.path('/l/' + lessonRef.key() + '/' + $filter('safeTitle')($scope.lesson.title));
                         });
                     });
                 });

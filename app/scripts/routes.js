@@ -80,11 +80,11 @@ angular.module('deluciaApp')
           templateUrl: 'views/new-lesson.html',
           controller: 'NewLessonCtrl'
         })
-        .when('/lessons/:lessonId', {
+        .when('/l/:lessonId/:safeTitle', {
           templateUrl: 'views/lesson-detail.html',
           controller: 'LessonDetailCtrl'
         })
-        .when('/lessons/:lessonId/videos/:videoId', {
+        .when('/l/:lessonId/:safeTitle/v/:videoId', {
           templateUrl: 'views/lesson-detail.html',
           controller: 'LessonDetailCtrl'
         })

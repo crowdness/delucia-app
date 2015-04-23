@@ -1,6 +1,6 @@
 <h2>Latest Lessons</h2>
 <ul class="list-unstyled">
     <li ng-repeat="lesson in lessons">
-        <p><a href="/lessons/{{lesson.$id}}">{{lesson.title}}</a></p>
+        <p><a href="/l/{{lesson.$id}}/{{lesson.title | safeTitle}}">{{lesson.title}}</a></p>
     </li>
 </ul>
