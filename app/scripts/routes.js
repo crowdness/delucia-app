@@ -77,16 +77,16 @@ angular.module('deluciaApp')
             controller: 'AccountCtrl'
         })
         .whenAuthenticated('/new-lesson', {
-          templateUrl: 'views/new-lesson.html',
-          controller: 'NewLessonCtrl'
+            templateUrl: 'views/new-lesson.html',
+            controller: 'NewLessonCtrl'
         })
-        .when('/l/:lessonId/:safeTitle', {
-          templateUrl: 'views/lesson-detail.html',
-          controller: 'LessonDetailCtrl'
+        .when('/l/:lessonId', {
+            templateUrl: 'views/lesson-detail.html',
+            controller: 'LessonDetailCtrl'
         })
-        .when('/l/:lessonId/:safeTitle/v/:videoId', {
-          templateUrl: 'views/lesson-detail.html',
-          controller: 'LessonDetailCtrl'
+        .when('/l/:lessonId/:videoId', {
+            templateUrl: 'views/lesson-detail.html',
+            controller: 'LessonDetailCtrl'
         })
         .otherwise({
             redirectTo: '/'
@@ -103,6 +103,10 @@ angular.module('deluciaApp')
     function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath) {
         $rootScope.location = $location;
         $rootScope.Auth = Auth;
+
+        $rootScope.Utils = {
+            keys: Object.keys
+        };
 
         // watch for login status changes and redirect if appropriate
         Auth.$onAuth(check);

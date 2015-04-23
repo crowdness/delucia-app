@@ -11,7 +11,7 @@
 angular.module('deluciaApp')
   .filter('safeTitle', function () {
     return function (input) {
-      return input.replace(/\W+/g, '-').toLowerCase();
+      return input.replace(/\W+/g, '-').replace(/^-|-$/g, '').toLowerCase();
     };
   });
 

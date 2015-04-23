@@ -2,5 +2,5 @@
 <h2>{{lesson.title}}</h2>
 <p class="lead">{{lesson.description}}</p>
 <p>
-    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': videoId == $parent.videoId}" href="/l/{{lessonId}}/{{lesson.title | safeTitle}}/v/{{videoId}}" ng-repeat="(videoId, video) in lesson.videos">{{video.language.name}}</a>
+    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': videoId == $parent.videoId}" href="/l/{{lessonId}}/{{videoId}}" ng-repeat="(videoId, video) in lesson.videos">{{video.language.name}}</a>
 </p>

@@ -3,8 +3,8 @@
 <ul class="list-unstyled">
     <li ng-repeat="lesson in lessons">
         <p class="lead">
-            <a href="/l/{{lesson.$id}}/{{lesson.title | safeTitle}}">{{lesson.title}}</a>
-            <span class="label label-default" ng-repeat="video in lesson.videos">{{video.language.name}}</span>
+            <a href="/l/{{lesson.$id}}">{{lesson.title}}</a>
+            <span class="label label-default" ng-pluralize count="Utils.keys(lesson.videos).length" when="{'0': 'No videos','1': '1 video','other': '{} videos'}"></span>
         </p>
     </li>
 </ul>
