@@ -30,11 +30,14 @@ angular.module('deluciaApp')
                         $scope.err = err;
                         return;
                     }
-                    lessonRef.child('videos').push($scope.video, function(err) {
+                    var videoRef = lessonRef.child('videos').push($scope.video, function(err) {
                         if (err) {
                             $scope.err = err;
                             return;
                         }
+                        lessonRef.update({
+                            defaultVideoId: videoRef.key()
+                        });
                         $scope.$apply(function() {
                             $location.path('/lessons/' + lessonRef.key());
                         });

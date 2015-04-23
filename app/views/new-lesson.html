@@ -1,5 +1,12 @@
 <h2>New Lesson</h2>
 <form name="frm" role="form" novalidate>
+    <div class="form-group">
+        <label for="language">Lesson Language</label>
+        <input class="form-control" type="text" ng-model="video.language.name" readonly>
+        <div class="help-block">
+            <p class="text-info">English is default language for all new lessons.</p>
+        </div>
+    </div>
     <div class="form-group" ng-class="{'has-error': frm.title.$invalid && !frm.title.$pristine}">
         <label class="control-label" for="title">Lesson Title</label>
         <input type="text" class="form-control" id="title" name="title" ng-model="lesson.title" placeholder="Example: Hello, how are you doing today?" required>
@@ -9,12 +16,8 @@
         <textarea class="form-control" id="description" name="description" ng-model="lesson.description" placeholder="Example: How to greet somebody in a friendly and polite way." required></textarea>
     </div>
     <div class="form-group">
-        <label for="language">Language</label>
-        <select class="form-control" id="language" name="language" ng-model="video.language" ng-options="lang.name for lang in languages" required></select>
-    </div>
-    <div class="form-group">
         <button class="btn btn-primary" ng-click="submit()" ng-disabled="frm.$invalid">Submit</button>&nbsp;
-        <span class="text-info" ng-show="frm.$invalid">Please fill in all fields properly</span>
+        <span class="text-info" ng-show="frm.$invalid">Please fill in required fields</span>
         <span class="text-danger" ng-show="err">{{err}}</span>
     </div>
 </form>
