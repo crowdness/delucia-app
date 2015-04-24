@@ -84,6 +84,10 @@ angular.module('deluciaApp')
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
+        .whenAuthenticated('/l/:lessonId/amend', {
+          templateUrl: 'views/amend-lesson.html',
+          controller: 'AmendLessonCtrl'
+        })
         .when('/l/:lessonId/:videoId', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
