@@ -20,5 +20,6 @@ angular.module('deluciaApp', [
     'firebase',
     'firebase.ref',
     'firebase.auth',
-    'validation.match'
+    'validation.match',
+    'ui.bootstrap'
   ]);

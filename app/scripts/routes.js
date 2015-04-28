@@ -85,12 +85,16 @@ angular.module('deluciaApp')
             controller: 'LessonDetailCtrl'
         })
         .whenAuthenticated('/l/:lessonId/amend', {
-          templateUrl: 'views/amend-lesson.html',
-          controller: 'AmendLessonCtrl'
+            templateUrl: 'views/amend-lesson.html',
+            controller: 'AmendLessonCtrl'
         })
         .when('/l/:lessonId/:videoId', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
+        })
+        .when('/search', {
+          templateUrl: 'views/search.html',
+          controller: 'SearchCtrl'
         })
         .otherwise({
             redirectTo: '/'
@@ -103,10 +107,32 @@ angular.module('deluciaApp')
  * for changes in auth status which might require us to navigate away from a path
  * that we can no longer view.
  */
-.run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath',
-    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath) {
+.run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath', '$modal',
+    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath, $modal) {
         $rootScope.location = $location;
         $rootScope.Auth = Auth;
+        $rootScope.showSearchDialog = function() {
+            $modal.open({
+                templateUrl: 'views/search-modal.html'
+            });
+        };
+        $rootScope.search = function(q, lang) {
+            $location.path('/search').search({
+                q: q,
+                lang: lang.code
+            });
+        };
+
+        $rootScope.languages = [{
+            code: 'en',
+            name: 'English'
+        }, {
+            code: 'es',
+            name: 'Spanish'
+        }, {
+            code: 'sr',
+            name: 'Serbian'
+        }];
 
         $rootScope.Utils = {
             keys: Object.keys
