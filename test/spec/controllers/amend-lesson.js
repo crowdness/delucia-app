@@ -13,11 +13,12 @@ describe('Controller: AmendLessonCtrl', function () {
     scope = $rootScope.$new();
     AmendLessonCtrl = $controller('AmendLessonCtrl', {
       $scope: scope,
-      $routeParams: {lessonId: '1'}
+      $routeParams: {lessonId: '1'},
+      user: {}
     });
   }));
 
   it('should attach a list of languages to the scope', function () {
-    expect(scope.languages.length).toBe(2);
+    expect(scope.languages.length).toBe(3);
   });
 });
