@@ -10,8 +10,8 @@
 angular.module('deluciaApp')
     .controller('LessonDetailCtrl', function($scope, $location, $routeParams, Ref, $firebaseObject) {
         $scope.lessonId = $routeParams.lessonId;
-        $scope.lesson = $firebaseObject(Ref.child('lessons').child($scope.lessonId));
-        $scope.lesson.$loaded(function(data) {
+        var lesson = $firebaseObject(Ref.child('lessons').child($scope.lessonId));
+        lesson.$loaded(function(data) {
             if (!data.title) {
                 $scope.err = 'Sorry, lesson not found.';
                 return;
@@ -19,6 +19,12 @@ angular.module('deluciaApp')
             $scope.videoId = $routeParams.videoId;
             if ($scope.videoId) {
                 $scope.video = $firebaseObject(Ref.child('lessons').child($scope.lessonId).child('videos').child($scope.videoId));
+                $scope.video.$loaded(function() {
+                    // avoid data flashing
+                    $scope.lesson = lesson;
+                });
+            } else {
+                $scope.lesson = lesson;
             }
         }, function(err) {
             $scope.err = err;

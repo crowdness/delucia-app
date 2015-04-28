@@ -22,27 +22,37 @@ angular.module('deluciaApp')
             delete $scope.err;
             if ($scope.frm.$valid) {
                 $scope.lesson.author = user.uid;
-                $scope.video.author = user.uid;
-                var safeTitle = $filter('safeTitle')($scope.lesson.title);
 
-                var lessonRef = Ref.child('lessons').child(safeTitle);
-                lessonRef.once('value', function(snapshot) {
+                var safeTitle = $filter('safeTitle')($scope.lesson.title);
+                $scope.lessonRef = Ref.child('lessons').child(safeTitle);
+                $scope.lessonRef.once('value', function(snapshot) {
                     if (snapshot.exists()) {
                         $scope.err = 'Lesson already exists.';
                         return;
                     }
-                    lessonRef.set($scope.lesson, function(err) {
+                    $scope.lessonRef.set($scope.lesson, function(err) {
                         if (err) {
                             $scope.err = err;
                             return;
                         }
-                        lessonRef.child('videos').push($scope.video, function(err) {
+
+                        $scope.video.author = user.uid;
+                        $scope.video.lessonId = safeTitle;
+                        $scope.video.title = $scope.lesson.title;
+                        $scope.video.description = $scope.lesson.description;
+                        var videoRef = Ref.child('videos').push($scope.video, function(err) {
                             if (err) {
                                 $scope.err = err;
                                 return;
                             }
-                            $scope.$apply(function() {
-                                $location.path('/l/' + $filter('safeTitle')($scope.lesson.title));
+                            $scope.lessonRef.child('videos').child(videoRef.key()).set($scope.video, function(err) {
+                                if (err) {
+                                    $scope.err = err;
+                                    return;
+                                }
+                                $scope.$apply(function() {
+                                    $location.path('/l/' + safeTitle + '/' + videoRef.key());
+                                });
                             });
                         });
                     });
