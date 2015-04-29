@@ -93,8 +93,8 @@ angular.module('deluciaApp')
             controller: 'LessonDetailCtrl'
         })
         .when('/search', {
-          templateUrl: 'views/search.html',
-          controller: 'SearchCtrl'
+            templateUrl: 'views/search.html',
+            controller: 'SearchCtrl'
         })
         .otherwise({
             redirectTo: '/'
@@ -107,8 +107,8 @@ angular.module('deluciaApp')
  * for changes in auth status which might require us to navigate away from a path
  * that we can no longer view.
  */
-.run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath', '$modal',
-    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath, $modal) {
+.run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath', '$modal', 'Ref', '$firebaseArray', '$q', '_',
+    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath, $modal, Ref, $firebaseArray, $q, _) {
         $rootScope.location = $location;
         $rootScope.Auth = Auth;
         $rootScope.showSearchDialog = function() {
@@ -121,6 +121,23 @@ angular.module('deluciaApp')
                 q: q,
                 lang: lang.code
             });
+        };
+        $rootScope.searchVideos = function(lang, q) {
+            q = q.toLowerCase();
+            var deferred = $q.defer();
+
+            $firebaseArray(Ref.child('videos').orderByChild('languageCode').equalTo(lang.code)).$loaded(function(videos) {
+                deferred.resolve(_.filter(videos, function(video) {
+                    return video.title.toLowerCase().indexOf(q) > -1;
+                }));
+            });
+
+            return deferred.promise.then(function(videos) {
+                return videos;
+            });
+        };
+        $rootScope.goToVideo = function(item){
+            $location.path('/l/' + item.lessonId + '/' + item.$id);
         };
 
         $rootScope.languages = [{
@@ -163,4 +180,4 @@ angular.module('deluciaApp')
 
 // used by route security
 .constant('SECURED_ROUTES', {})
-.constant('_', window._);
+    .constant('_', window._);
