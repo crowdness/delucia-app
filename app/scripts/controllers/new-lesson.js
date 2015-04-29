@@ -40,6 +40,7 @@ angular.module('deluciaApp')
                         $scope.video.lessonId = safeTitle;
                         $scope.video.title = $scope.lesson.title;
                         $scope.video.description = $scope.lesson.description;
+                        $scope.video.languageCode = $scope.video.language.code;
                         var videoRef = Ref.child('videos').push($scope.video, function(err) {
                             if (err) {
                                 $scope.err = err;

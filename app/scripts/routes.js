@@ -162,4 +162,5 @@ angular.module('deluciaApp')
 ])
 
 // used by route security
-.constant('SECURED_ROUTES', {});
+.constant('SECURED_ROUTES', {})
+.constant('_', window._);

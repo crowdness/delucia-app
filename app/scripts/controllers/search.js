@@ -8,13 +8,15 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-  .controller('SearchCtrl', function ($scope, $routeParams) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    .controller('SearchCtrl', function($scope, $routeParams, Ref, $firebaseArray, $rootScope, _) {
+        $scope.q = $routeParams.q;
+        $scope.lang = _.find($rootScope.languages, {
+            'code': $routeParams.lang
+        });
 
-    $scope.q = $routeParams.q;
-    $scope.langCode = $routeParams.lang;
-  });
+        $scope.lessons = $firebaseArray(Ref.child('videos').orderByChild('languageCode').equalTo($scope.lang.code));
+
+        $scope.filterFunction = function(item) {
+            return item.title.toLowerCase().indexOf($routeParams.q.toLowerCase().trim()) > -1 ? true : false;
+        };
+    });
