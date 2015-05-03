@@ -8,11 +8,8 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter) {
-        $scope.languages = [{
-            code: 'en',
-            name: 'English'
-        }];
+    .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter, $rootScope) {
+        $scope.languages = $rootScope.languages;
         $scope.lesson = {};
         $scope.video = {
             language: $scope.languages[0]
