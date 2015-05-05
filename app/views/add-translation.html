@@ -1,0 +1,37 @@
+<h2>Add Translation</h2>
+<div ng-hide="languages.length" ng-cloak class="alert alert-danger" role="alert">
+    <p>All supported translations exist. Please add video instead. <a href="javascript:history.go(-1);">back</a></p>
+</div>
+<form name="frm" role="form" novalidate ng-show="languages.length">
+    <div class="row">
+        <div class="form-group col-xs-6">
+            <label for="language">Language</label>
+            <select class="form-control" id="language" name="language" ng-model="lesson.language" ng-options="lang.name for lang in languages" required></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="control-label">Title in English</label>
+            <input type="text" class="form-control" ng-model="parentLesson.title" readonly>
+        </div>
+        <div class="form-group col-sm-6" ng-show="lesson.language.code != 'en'">
+            <label class="control-label" for="title">Title in {{lesson.language.name}}</label>
+            <input type="text" class="form-control" id="title" name="title" ng-model="lesson.title" placeholder="Please enter translation..." ng-required="lesson.language.code != 'en'">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="control-label">Description in English</label>
+            <textarea class="form-control" ng-model="parentLesson.description" readonly></textarea>
+        </div>
+        <div class="form-group col-sm-6" ng-show="lesson.language.code != 'en'">
+            <label class="control-label">Description in {{lesson.language.name}}</label>
+            <textarea class="form-control" ng-model="lesson.description" placeholder="Please enter translation..." ng-required="lesson.language.code != 'en'"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" ng-click="submit()" ng-disabled="frm.$invalid">Submit</button>&nbsp;
+        <span class="text-info" ng-show="frm.$invalid">Please fill in required fields</span>
+        <span class="text-danger" ng-show="err">{{err}}</span>
+    </div>
+</form>

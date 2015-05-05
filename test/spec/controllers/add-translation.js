@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: AmendLessonCtrl', function () {
+describe('Controller: AddTranslationCtrl', function () {
 
   // load the controller's module
   beforeEach(module('deluciaApp'));
 
-  var AmendLessonCtrl,
+  var AddTranslationCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    AmendLessonCtrl = $controller('AmendLessonCtrl', {
+    AddTranslationCtrl = $controller('AddTranslationCtrl', {
       $scope: scope,
       $routeParams: {lessonId: '1'},
       user: {}

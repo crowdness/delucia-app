@@ -84,11 +84,11 @@ angular.module('deluciaApp')
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
-        .whenAuthenticated('/l/:lessonId/amend', {
-            templateUrl: 'views/amend-lesson.html',
-            controller: 'AmendLessonCtrl'
+        .whenAuthenticated('/l/:lessonId/add-translation', {
+            templateUrl: 'views/add-translation.html',
+            controller: 'AddTranslationCtrl'
         })
-        .when('/l/:lessonId/:videoId', {
+        .when('/l/:lessonId/:languageCode', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
@@ -126,18 +126,18 @@ angular.module('deluciaApp')
             q = q.toLowerCase();
             var deferred = $q.defer();
 
-            $firebaseArray(Ref.child('videos').orderByChild('languageCode').equalTo(lang.code)).$loaded(function(videos) {
-                deferred.resolve(_.filter(videos, function(video) {
+            $firebaseArray(Ref.child('lessons').orderByChild('languageCode').equalTo(lang.code)).$loaded(function(lessons) {
+                deferred.resolve(_.filter(lessons, function(video) {
                     return video.title.toLowerCase().indexOf(q) > -1;
                 }));
             });
 
-            return deferred.promise.then(function(videos) {
-                return videos;
+            return deferred.promise.then(function(lessons) {
+                return lessons;
             });
         };
         $rootScope.goToVideo = function(item){
-            $location.path('/l/' + item.lessonId + '/' + item.$id);
+            $location.path('/l/' + (item.parentId || item.$id) + '/' + item.languageCode);
         };
 
         $rootScope.languages = [{

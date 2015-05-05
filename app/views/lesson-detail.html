@@ -1,8 +1,9 @@
 <h2 ng-cloak ng-show="err">{{err}}</h2>
-<h2>{{video.title || lesson.title}}</h2>
-<p class="lead">{{video.description || lesson.description}}</p>
-<p class="videos" style="margin-left: -10px; margin-top: -10px;">
-    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': videoId == $parent.videoId}" href="/l/{{lessonId}}/{{videoId}}" ng-repeat="(videoId, video) in lesson.videos" style="margin-left: 10px; margin-top: 10px;">{{video.language.name}}</a>
+<p class="translations" style="margin-left: -10px; margin-top: -10px;">
+    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == 'en'}" href="/l/{{lessonId}}/en" style="margin-left: 10px; margin-top: 10px;">English</a>
+    <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == $parent.languageCode}" href="/l/{{lessonId}}/{{languageCode}}" ng-repeat="(languageCode, translation) in lesson.translations" style="margin-left: 10px; margin-top: 10px;">{{translation.language.name}}</a>
 
-    <a class="btn btn-link" href="/l/{{lessonId}}/amend" style="margin-left: 0px; margin-top: 10px;">Add Video</a>
+    <a class="btn btn-link" href="/l/{{lessonId}}/add-translation" style="margin-left: 0px; margin-top: 10px;">Add Translation</a>
 </p>
+<h2>{{translation.title || lesson.title}}</h2>
+<p class="lead">{{translation.description || lesson.description}}</p>

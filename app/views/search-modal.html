@@ -10,7 +10,7 @@
         </div>
         <div class="form-group">
             <label for="q">Query</label>
-            <input class="form-control" id="q" name="q" ng-model="q" placeholder="Type ahead freely" typeahead="video.title for video in $root.searchVideos(lang, $viewValue)" typeahead-on-select="$root.goToVideo($item, $model, $label); $dismiss();">
+            <input class="form-control" id="q" name="q" ng-model="q" placeholder="Type ahead freely" typeahead="lesson.title for lesson in $root.searchVideos(lang, $viewValue)" typeahead-on-select="$root.goToVideo($item, $model, $label); $dismiss();">
         </div>
     </div>
     <!-- <div class="modal-footer">

@@ -16,10 +16,10 @@ angular.module('deluciaApp')
                 $scope.err = 'Sorry, lesson not found.';
                 return;
             }
-            $scope.videoId = $routeParams.videoId;
-            if ($scope.videoId) {
-                $scope.video = $firebaseObject(Ref.child('lessons').child($scope.lessonId).child('videos').child($scope.videoId));
-                $scope.video.$loaded(function() {
+            $scope.languageCode = $routeParams.languageCode;
+            if ($scope.languageCode) {
+                $scope.translation = $firebaseObject(Ref.child('lessons').child($scope.lessonId).child('translations').child($scope.languageCode));
+                $scope.translation.$loaded(function() {
                     // avoid data flashing
                     $scope.lesson = lesson;
                 });
