@@ -150,6 +150,8 @@ angular.module('deluciaApp')
             code: 'sr',
             name: 'Serbian'
         }];
+        
+        $rootScope.vimeoAccessToken = 'aadef1c191f11ecb0eb9e19168b42a0e';
 
         $rootScope.Utils = {
             keys: Object.keys
