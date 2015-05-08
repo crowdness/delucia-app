@@ -58,7 +58,7 @@ angular.module('deluciaApp')
 
 // configure views; whenAuthenticated adds a resolve method to ensure users authenticate
 // before trying to access that route
-.config(['$routeProvider', function($routeProvider) {
+.config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $sceDelegateProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'views/main.html',
@@ -80,7 +80,7 @@ angular.module('deluciaApp')
             templateUrl: 'views/new-lesson.html',
             controller: 'NewLessonCtrl'
         })
-        .when('/l/:lessonId', {
+        .whenAuthenticated('/l/:lessonId', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
@@ -88,7 +88,7 @@ angular.module('deluciaApp')
             templateUrl: 'views/add-translation.html',
             controller: 'AddTranslationCtrl'
         })
-        .when('/l/:lessonId/:languageCode', {
+        .whenAuthenticated('/l/:lessonId/:languageCode', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
@@ -99,6 +99,13 @@ angular.module('deluciaApp')
         .otherwise({
             redirectTo: '/'
         });
+        
+    $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'https://player.vimeo.com/**'
+    ]);
 }])
 
 /**
@@ -151,7 +158,7 @@ angular.module('deluciaApp')
             name: 'Serbian'
         }];
         
-        $rootScope.vimeoAccessToken = 'aadef1c191f11ecb0eb9e19168b42a0e';
+        $rootScope.vimeoAccessToken = 'dc0de73c5a1e97fd52fccc4c45c8011d';
 
         $rootScope.Utils = {
             keys: Object.keys
@@ -182,4 +189,5 @@ angular.module('deluciaApp')
 
 // used by route security
 .constant('SECURED_ROUTES', {})
-    .constant('_', window._);
+    .constant('_', window._)
+    .constant('URI', window.URI);
