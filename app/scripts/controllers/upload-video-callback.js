@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('UploadVideoCallbackCtrl', function($scope, $routeParams, Ref, $firebaseObject, $log, $location, user) {
+    .controller('UploadVideoCallbackCtrl', function($scope, $routeParams, Ref, $firebaseObject, $log, $location, user, $http, $rootScope, $timeout) {
         $scope.lessonId = $routeParams.lessonId;
         $scope.languageCode = $routeParams.languageCode;
         $scope.video_uri = $location.search().video_uri;
@@ -19,18 +19,62 @@ angular.module('deluciaApp')
             $scope.lesson = $firebaseObject(Ref.child('lessons').child($scope.lessonId).child('translations').child($scope.languageCode));
         }
 
+
         $scope.lesson.$loaded(function() {
             $log.log($scope.lesson);
 
-            $scope.lesson.videos = $scope.lesson.videos || {};
             var videoObj = {
                 videoUri: $scope.video_uri,
                 videoId: $scope.video_uri.replace('/videos/', ''),
-                embedUrl: 'https://player.vimeo.com' + $scope.video_uri.replace('videos', 'video')
+                embedUrl: 'https://player.vimeo.com' + $scope.video_uri.replace('videos', 'video'),
+                userDisplayName: user[user.provider].displayName,
+                videoName: $scope.lesson.title + ' by ' + user[user.provider].displayName
             };
-            $scope.lesson.videos[user.uid] = videoObj;
-            $scope.lesson.$save().then(function() {
-                $location.url('/l/' + $scope.lessonId + '/' + $scope.languageCode + '#' + videoObj.videoId);
-            });
+
+            $http.patch('https://api.vimeo.com/videos/' + videoObj.videoId, {
+                    name: videoObj.videoName
+                }, {
+                    headers: {
+                        Authorization: 'bearer ' + $rootScope.vimeoAccessToken
+                    }
+                })
+                .success(function(data) {
+                    $log.log(data);
+
+                    var checkPictures = function() {
+                        $timeout(function() {
+                            $http.get('https://api.vimeo.com/videos/' + videoObj.videoId + '/pictures', {
+                                    headers: {
+                                        Authorization: 'bearer ' + $rootScope.vimeoAccessToken
+                                    }
+                                })
+                                .success(function(response) {
+                                    $log.log(response);
+
+                                    if (response.data.length) {
+                                        // link to the 100x75 video thumbnail
+                                        videoObj.thumbUrl = response.data[0].sizes[0].link;
+
+                                        $scope.lesson.videos = $scope.lesson.videos || {};
+                                        $scope.lesson.videos[user.uid] = videoObj;
+                                        $scope.lesson.$save().then(function() {
+                                            $location.url('/l/' + $scope.lessonId + '/' + $scope.languageCode + '#' + videoObj.videoId);
+                                        });
+                                    } else {
+                                        checkPictures();
+                                    }
+                                })
+                                .error(function(data) {
+                                    $log.log(data);
+                                });
+                        }, 1000);
+                    };
+
+                    checkPictures();
+
+                })
+                .error(function(data) {
+                    $log.log(data);
+                });
         });
     });

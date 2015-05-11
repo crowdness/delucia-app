@@ -1,6 +1,6 @@
 <div class='lesson-detail'>
     <h2>Upload Video</h2>
-    <form method="POST" action="{{uploadActionUrl}}" enctype="multipart/form-data">
+    <form name="frm" method="POST" action="{{uploadActionUrl}}" enctype="multipart/form-data" novalidate>
         <div class="form-group">
             <label class="control-label">Title</label>
             <input type="text" class="form-control" ng-model="lesson.title" readonly>
