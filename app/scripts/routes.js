@@ -80,7 +80,7 @@ angular.module('deluciaApp')
             templateUrl: 'views/new-lesson.html',
             controller: 'NewLessonCtrl'
         })
-        .whenAuthenticated('/l/:lessonId', {
+        .when('/l/:lessonId', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
         })
@@ -88,9 +88,17 @@ angular.module('deluciaApp')
             templateUrl: 'views/add-translation.html',
             controller: 'AddTranslationCtrl'
         })
-        .whenAuthenticated('/l/:lessonId/:languageCode', {
+        .when('/l/:lessonId/:languageCode', {
             templateUrl: 'views/lesson-detail.html',
             controller: 'LessonDetailCtrl'
+        })
+        .whenAuthenticated('/l/:lessonId/:languageCode/upload-video', {
+          templateUrl: 'views/upload-video.html',
+          controller: 'UploadVideoCtrl'
+        })
+        .whenAuthenticated('/l/:lessonId/:languageCode/upload-video/callback', {
+          templateUrl: 'views/upload-video-callback.html',
+          controller: 'UploadVideoCallbackCtrl'
         })
         .when('/search', {
             templateUrl: 'views/search.html',

@@ -2,35 +2,27 @@
     <h2 ng-cloak ng-show="err">{{err}}</h2>
     <p class="translations" style="margin-left: -10px; margin-top: -10px;">
         <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == 'en'}" href="/l/{{lessonId}}/en" style="margin-left: 10px; margin-top: 10px;">English</a>
-        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == $parent.languageCode}" href="/l/{{lessonId}}/{{languageCode}}"
-        ng-repeat="(languageCode, translation) in lesson.translations" style="margin-left: 10px; margin-top: 10px;">{{translation.language.name}}</a>
+        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == $parent.languageCode}" href="/l/{{lessonId}}/{{languageCode}}" ng-repeat="(languageCode, translation) in lesson.translations" style="margin-left: 10px; margin-top: 10px;">{{translation.language.name}}</a>
         <a class="btn btn-link" href="/l/{{lessonId}}/add-translation" style="margin-left: 0px; margin-top: 10px;">Add Translation</a>
     </p>
     <div>
         <h2>{{translation.title || lesson.title}}</h2>
         <p class="lead">{{translation.description || lesson.description}}</p>
     </div>
-    <div class="row">
+    <div class="row" ng-if="languageCode">
         <div class="col-xs-12 col-sm-6">
-            <div ng-repeat="(user, videoPath) in videos" class="embed-responsive embed-responsive-16by9">
-                <iframe src="{{videoPath}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <div ng-repeat="(user, video) in videos" class="embed-responsive embed-responsive-16by9">
+                <iframe ng-src="{{video.embedUrl}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+            <div class="lead" ng-show="!videos" style="margin-bottom: 0;">
+                <i>No videos</i>
             </div>
         </div>
     </div>
-    <div>
+    <div ng-show="languageCode">
+        <hr/>
         <div class="form-group">
-            <hr />
-            <a class="btn btn-success" ng-click="uploadForm();" ng-hide="uploadActionUrl">Upload Video</a>
-        </div>
-        <div class="well" ng-show="uploadActionUrl">
-            <form method="POST" action="{{uploadActionUrl}}" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file">Select video file:</label>
-                    <input type="file" name="file_data" id="file" class="form-control">
-                </div>
-                <input type="submit" name="submit" value="Upload" class="btn btn-primary">
-                <button class="btn btn-default">Cancel</button>
-            </form>
+            <a class="btn btn-success" href="/l/{{lessonId}}/{{languageCode}}/upload-video">Upload Video</a>
         </div>
     </div>
 </div>
