@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('UploadVideoCallbackCtrl', function($scope, $routeParams, Ref, $firebaseObject, $log, $location, user, $http, $rootScope, $timeout) {
+    .controller('UploadVideoCallbackCtrl', function($scope, $routeParams, Ref, $firebaseObject, $log, $location, user, $http, $rootScope) {
         $scope.lessonId = $routeParams.lessonId;
         $scope.languageCode = $routeParams.languageCode;
         $scope.video_uri = $location.search().video_uri;
@@ -41,36 +41,42 @@ angular.module('deluciaApp')
                 .success(function(data) {
                     $log.log(data);
 
-                    var checkPictures = function() {
-                        $timeout(function() {
-                            $http.get('https://api.vimeo.com/videos/' + videoObj.videoId + '/pictures', {
-                                    headers: {
-                                        Authorization: 'bearer ' + $rootScope.vimeoAccessToken
-                                    }
-                                })
-                                .success(function(response) {
-                                    $log.log(response);
+                    $scope.lesson.videos = $scope.lesson.videos || {};
+                    $scope.lesson.videos[user.uid] = videoObj;
+                    $scope.lesson.$save().then(function() {
+                        $location.url('/l/' + $scope.lessonId + '/' + $scope.languageCode + '#' + videoObj.videoId);
+                    });
 
-                                    if (response.data.length) {
-                                        // link to the 100x75 video thumbnail
-                                        videoObj.thumbUrl = response.data[0].sizes[0].link;
+                    // var checkPictures = function() {
+                    //     $timeout(function() {
+                    //         $http.get('https://api.vimeo.com/videos/' + videoObj.videoId + '/pictures', {
+                    //                 headers: {
+                    //                     Authorization: 'bearer ' + $rootScope.vimeoAccessToken
+                    //                 }
+                    //             })
+                    //             .success(function(response) {
+                    //                 $log.log(response);
 
-                                        $scope.lesson.videos = $scope.lesson.videos || {};
-                                        $scope.lesson.videos[user.uid] = videoObj;
-                                        $scope.lesson.$save().then(function() {
-                                            $location.url('/l/' + $scope.lessonId + '/' + $scope.languageCode + '#' + videoObj.videoId);
-                                        });
-                                    } else {
-                                        checkPictures();
-                                    }
-                                })
-                                .error(function(data) {
-                                    $log.log(data);
-                                });
-                        }, 1000);
-                    };
+                    //                 if (response.data.length) {
+                    //                     // link to the 100x75 video thumbnail
+                    //                     videoObj.thumbUrl = response.data[0].sizes[0].link;
 
-                    checkPictures();
+                    //                     $scope.lesson.videos = $scope.lesson.videos || {};
+                    //                     $scope.lesson.videos[user.uid] = videoObj;
+                    //                     $scope.lesson.$save().then(function() {
+                    //                         $location.url('/l/' + $scope.lessonId + '/' + $scope.languageCode + '#' + videoObj.videoId);
+                    //                     });
+                    //                 } else {
+                    //                     checkPictures();
+                    //                 }
+                    //             })
+                    //             .error(function(data) {
+                    //                 $log.log(data);
+                    //             });
+                    //     }, 1000);
+                    // };
+
+                    // checkPictures();
 
                 })
                 .error(function(data) {
