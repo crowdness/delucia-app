@@ -1,8 +1,8 @@
 <div class='lesson-detail'>
     <h2 ng-cloak ng-show="err">{{err}}</h2>
     <p class="translations" style="margin-left: -10px; margin-top: -10px;">
-        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == 'en'}" href="/l/{{lessonId}}/en" style="margin-left: 10px; margin-top: 10px;">English</a>
-        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == $parent.languageCode}" href="/l/{{lessonId}}/{{languageCode}}" ng-repeat="(languageCode, translation) in lesson.translations" style="margin-left: 10px; margin-top: 10px;">{{translation.language.name}}</a>
+        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == 'en'}" href="/l/{{lessonId}}/en" style="margin-left: 10px; margin-top: 10px;">English <span class="badge" ng-bind="propCount(lesson.videos)"></span></a>
+        <a class="btn btn-default btn-sm" ng-class="{'btn-primary': languageCode == $parent.languageCode}" href="/l/{{lessonId}}/{{languageCode}}" ng-repeat="(languageCode, translation) in lesson.translations" style="margin-left: 10px; margin-top: 10px;">{{translation.language.name}} <span class="badge" ng-bind="propCount(translation.videos)"></span></a>
         <a class="btn btn-link" href="/l/{{lessonId}}/add-translation" style="margin-left: 0px; margin-top: 10px;">Add Translation</a>
     </p>
     <div>
@@ -10,10 +10,17 @@
         <p class="lead">{{translation.description || lesson.description}}</p>
     </div>
     <div class="row" ng-if="languageCode">
-        <div class="col-xs-12 col-sm-6">
-            <div ng-repeat="(user, video) in videos" class="embed-responsive embed-responsive-16by9">
+        <div class="col-xs-12 col-sm-12">
+            <div ng-repeat="(user, video) in videos" class="embed-responsive embed-responsive-16by9" ng-show="isActive(video)">
                 <iframe ng-src="{{video.embedUrl}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
+            <nav ng-show="videos">
+                <ul class="pager" style="margin-bottom: 0;">
+                    <li class="previous" ng-class="{disabled: previous() === activeVideo}"><a href="#{{previous()}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li>Video {{videoIndex()}} of {{propCount(videos)}}</li>
+                    <li class="next" ng-class="{disabled: next() === activeVideo}"><a href="#{{next()}}">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
             <div class="lead" ng-show="!videos" style="margin-bottom: 0;">
                 <i>No videos</i>
             </div>
