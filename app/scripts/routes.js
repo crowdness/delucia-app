@@ -173,13 +173,16 @@ angular.module('deluciaApp')
         $rootScope.languages = [{
             code: 'en',
             name: 'English'
-        }, {
-            code: 'es',
-            name: 'Spanish'
-        }, {
-            code: 'sr',
-            name: 'Serbian'
         }];
+        var tempLanguages = $firebaseArray(Ref.child('languages'));
+        tempLanguages.$loaded(function() {
+            $rootScope.languages = _.map(tempLanguages, function(lang) {
+                return {
+                    code: lang.$id,
+                    name: lang.$value
+                };
+            });
+        });
 
         $rootScope.vimeoAccessToken = '3ddd650c8a4657c2cde8174fe91024ca';
 

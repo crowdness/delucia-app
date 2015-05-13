@@ -11,17 +11,16 @@ angular.module('deluciaApp')
     .controller('AddTranslationCtrl', function($scope, Ref, $firebaseObject, $routeParams, user, $location, $rootScope, _) {
         $scope.parentLessonRef = Ref.child('lessons').child($routeParams.lessonId);
         $scope.parentLesson = $firebaseObject($scope.parentLessonRef);
-        $scope.parentLesson.$loaded(function () {
-            $scope.languages = _.filter($rootScope.languages, function (lang) {
-                if(_.contains(_.keys($scope.parentLesson.translations), lang.code) || lang.code === 'en'){
+        $scope.parentLesson.$loaded(function() {
+            $scope.languages = _.filter($rootScope.languages, function(lang) {
+                if (_.contains(_.keys($scope.parentLesson.translations), lang.code) || lang.code === 'en') {
                     return false;
-                }
-                else{
+                } else {
                     return true;
                 }
             });
-            
-            if($scope.languages.length){
+
+            if ($scope.languages.length) {
                 $scope.lesson = {
                     language: $scope.languages[0],
                     languageCode: $scope.languages[0].code
@@ -35,13 +34,14 @@ angular.module('deluciaApp')
                 $scope.lesson.author = user.uid;
                 $scope.lesson.parentId = $scope.parentLesson.$id;
                 $scope.lesson.languageCode = $scope.lesson.language.code;
+                $scope.lesson.language = angular.copy($scope.lesson.language);
 
                 Ref.child('lessons').push($scope.lesson, function(err) {
                     if (err) {
                         $scope.err = err;
                         return;
                     }
-                    
+
                     $scope.parentLessonRef.child('translations').child($scope.lesson.languageCode).set($scope.lesson);
                     $scope.$apply(function() {
                         $location.path('/l/' + $scope.parentLesson.$id + '/' + $scope.lesson.languageCode);
