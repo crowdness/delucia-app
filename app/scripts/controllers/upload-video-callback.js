@@ -9,6 +9,12 @@
  */
 angular.module('deluciaApp')
     .controller('UploadVideoCallbackCtrl', function($scope, $routeParams, Ref, $firebaseObject, $log, $location, user, $http, $rootScope) {
+        $scope.error = $location.search().error;
+        $scope.error_description = $location.search().error_description;
+        if($scope.error_description){
+            return;
+        }
+
         $scope.lessonId = $routeParams.lessonId;
         $scope.languageCode = $routeParams.languageCode;
         $scope.video_uri = $location.search().video_uri;

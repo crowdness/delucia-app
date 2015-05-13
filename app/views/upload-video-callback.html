@@ -1,2 +1,8 @@
-<h2>Video Uploaded</h2>
-<p>Redirecting...</p>
+<div ng-hide="error_description">
+    <h2>Video Uploaded</h2>
+    <p>Redirecting...</p>
+</div>
+<div ng-show="error_description">
+    <h2>Error</h2>
+    <p>{{error_description}}</p>
+</div>
