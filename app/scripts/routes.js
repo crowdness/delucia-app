@@ -66,15 +66,30 @@ angular.module('deluciaApp')
         })
         .when('/login', {
             templateUrl: 'views/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            resolve: {
+                hideSearchBar: function() {
+                    return true;
+                }
+            }
         })
         .when('/reset-password', {
             templateUrl: 'views/reset-password.html',
-            controller: 'ResetPasswordCtrl'
+            controller: 'ResetPasswordCtrl',
+            resolve: {
+                hideSearchBar: function() {
+                    return true;
+                }
+            }
         })
         .whenAuthenticated('/account', {
             templateUrl: 'views/account.html',
-            controller: 'AccountCtrl'
+            controller: 'AccountCtrl',
+            resolve: {
+                hideSearchBar: function() {
+                    return true;
+                }
+            }
         })
         .whenAuthenticated('/new-lesson', {
             templateUrl: 'views/new-lesson.html',
@@ -93,12 +108,12 @@ angular.module('deluciaApp')
             controller: 'LessonDetailCtrl'
         })
         .whenAuthenticated('/l/:lessonId/:languageCode/upload-video', {
-          templateUrl: 'views/upload-video.html',
-          controller: 'UploadVideoCtrl'
+            templateUrl: 'views/upload-video.html',
+            controller: 'UploadVideoCtrl'
         })
         .whenAuthenticated('/l/:lessonId/:languageCode/upload-video/callback', {
-          templateUrl: 'views/upload-video-callback.html',
-          controller: 'UploadVideoCallbackCtrl'
+            templateUrl: 'views/upload-video-callback.html',
+            controller: 'UploadVideoCallbackCtrl'
         })
         .when('/search', {
             templateUrl: 'views/search.html',
@@ -107,7 +122,7 @@ angular.module('deluciaApp')
         .otherwise({
             redirectTo: '/'
         });
-        
+
     $sceDelegateProvider.resourceUrlWhitelist([
         // Allow same origin resource loads.
         'self',
@@ -151,8 +166,8 @@ angular.module('deluciaApp')
                 return lessons;
             });
         };
-        $rootScope.goToVideo = function(item){
-            $location.path('/l/' + (item.parentId || item.$id) + '/' + item.languageCode);
+        $rootScope.goToVideo = function(item) {
+            $location.url('/l/' + (item.parentId || item.$id) + '/' + item.languageCode);
         };
 
         $rootScope.languages = [{
@@ -165,7 +180,7 @@ angular.module('deluciaApp')
             code: 'sr',
             name: 'Serbian'
         }];
-        
+
         $rootScope.vimeoAccessToken = '3ddd650c8a4657c2cde8174fe91024ca';
 
         $rootScope.Utils = {
@@ -181,6 +196,10 @@ angular.module('deluciaApp')
             if (err === 'AUTH_REQUIRED') {
                 $location.path(loginRedirectPath);
             }
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function(e, next) {
+            $rootScope.hideSearchBar = next.locals.hideSearchBar || false;
         });
 
         function check(user) {

@@ -39,7 +39,7 @@
                         <li ng-class="{ active : location.path() === '/' }"><a href="/">Home</a></li>
                         <li ng-class="{ active : location.path() === '/new-lesson' }"><a href="/new-lesson">New Lesson</a></li>
                         <!-- //angularfire -->
-                        <li><a href="" ng-click="$root.showSearchDialog()">Search</a></li>
+                        <!-- <li><a href="" ng-click="$root.showSearchDialog()">Search</a></li> -->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li ng-hide-auth="" ng-class="{ active : location.path() === '/login' }"><a href="/login">Log In</a></li>
@@ -57,6 +57,15 @@
         </div>
     </div>
     <div class="container">
+        <div class="input-group search-bar" style="margin-bottom: 20px;" ng-hide="$root.hideSearchBar">
+            <input type="text" class="form-control" placeholder="Search {{$root.searchLang.name | lowercase}} lessons..." ng-model="$root.searchQuery" typeahead="lesson.title for lesson in $root.searchVideos($root.searchLang, $viewValue)" typeahead-on-select="$root.goToVideo($item, $model, $label); $root.searchQuery = '';">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-init="$root.searchLang = $root.languages[0]">{{$root.searchLang.name}} <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li ng-repeat="lang in $root.languages"><a ng-click="$root.searchLang = lang; $root.searchQuery = '';" style="cursor: pointer;">{{lang.name}}</a></li>
+                </ul>
+            </div>
+        </div>
         <div ng-view=""></div>
     </div>
     <div class="footer">
