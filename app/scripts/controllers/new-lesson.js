@@ -10,7 +10,10 @@
 angular.module('deluciaApp')
     .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter) {
         $scope.lesson = {
-            language: {code:'en', name:'English'},
+            language: {
+                code: 'en',
+                name: 'English'
+            },
             languageCode: 'en'
         };
 
@@ -32,7 +35,9 @@ angular.module('deluciaApp')
                             return;
                         }
 
-                        $location.path('/l/' + safeTitle + '/en');
+                        $scope.$apply(function() {
+                            $location.path('/l/' + safeTitle + '/en');
+                        });
                     });
                 });
             }
