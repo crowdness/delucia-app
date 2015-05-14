@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('AddTranslationCtrl', function($scope, Ref, $firebaseObject, $routeParams, user, $location, $rootScope, _) {
+    .controller('AddTranslationCtrl', function($scope, Ref, $firebaseObject, $routeParams, user, $location, $rootScope, _, Firebase) {
         $scope.parentLessonRef = Ref.child('lessons').child($routeParams.lessonId);
         $scope.parentLesson = $firebaseObject($scope.parentLessonRef);
         $scope.parentLesson.$loaded(function() {
@@ -36,6 +36,7 @@ angular.module('deluciaApp')
                 $scope.lesson.languageCode = $scope.lesson.language.code;
                 $scope.lesson.language = angular.copy($scope.lesson.language);
 
+                $scope.lesson.createdAt = Firebase.ServerValue.TIMESTAMP;
                 Ref.child('lessons').push($scope.lesson, function(err) {
                     if (err) {
                         $scope.err = err;

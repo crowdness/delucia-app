@@ -1,7 +1,7 @@
 <h2>Latest Lessons</h2>
 <p ng-hide="lessons.length">Loading...</p>
 <ul class="list-unstyled">
-    <li ng-repeat="lesson in lessons">
+    <li ng-repeat="lesson in lessons | reverse">
         <p class="lead">
             <a href="/l/{{lesson.parentId || lesson.$id}}/{{lesson.languageCode}}">{{lesson.title}}</a>
             <span class="label label-default">{{lesson.language.name}}</span>

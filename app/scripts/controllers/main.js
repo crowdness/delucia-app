@@ -15,5 +15,5 @@ angular.module('deluciaApp')
       'Karma'
     ];
 
-    $scope.lessons = $firebaseArray(Ref.child('lessons'));
+    $scope.lessons = $firebaseArray(Ref.child('lessons').orderByChild('createdAt').limitToLast(25));
   });

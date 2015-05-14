@@ -8,7 +8,7 @@
  * Controller of the deluciaApp
  */
 angular.module('deluciaApp')
-    .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter) {
+    .controller('NewLessonCtrl', function($scope, Ref, user, $location, $filter, Firebase) {
         $scope.lesson = {
             language: {
                 code: 'en',
@@ -29,6 +29,8 @@ angular.module('deluciaApp')
                         $scope.err = 'Lesson already exists.';
                         return;
                     }
+
+                    $scope.lesson.createdAt = Firebase.ServerValue.TIMESTAMP;
                     $scope.lessonRef.set($scope.lesson, function(err) {
                         if (err) {
                             $scope.err = err;
