@@ -57,15 +57,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="input-group search-bar" style="margin-bottom: 20px;" ng-hide="$root.hideSearchBar">
-            <input type="text" class="form-control" placeholder="Search {{$root.searchLang.name | lowercase}} lessons..." ng-model="$root.searchQuery" typeahead="lesson.title for lesson in $root.searchVideos($root.searchLang, $viewValue)" typeahead-on-select="$root.goToVideo($item, $model, $label); $root.searchQuery = '';">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-init="$root.searchLang = $root.languages[0]">{{$root.searchLang.name}} <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li ng-repeat="lang in $root.languages | orderBy:'name'"><a ng-click="$root.searchLang = lang; $root.searchQuery = '';" style="cursor: pointer;">{{lang.name}}</a></li>
-                </ul>
-            </div>
-        </div>
+        <search-bar></search-bar>
         <div ng-view=""></div>
     </div>
     <div class="footer">
@@ -137,6 +129,7 @@
     <script src="scripts/controllers/search.js"></script>
     <script src="scripts/controllers/upload-video.js"></script>
     <script src="scripts/controllers/upload-video-callback.js"></script>
+    <script src="scripts/directives/searchBar.js"></script>
     <!-- endbuild -->
 </body>
 

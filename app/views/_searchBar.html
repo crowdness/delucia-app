@@ -1,0 +1,9 @@
+<div class="input-group search-bar" style="margin-bottom: 20px;" ng-hide="$root.hideSearchBar">
+    <input type="text" class="form-control" placeholder="Search {{searchLang.name | lowercase}} lessons..." ng-model="searchQuery" typeahead="lesson.title for lesson in searchVideos(searchLang, $viewValue)" typeahead-on-select="goToVideo($item, $model, $label);">
+    <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{searchLang.name}} <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li ng-repeat="lang in $root.languages | orderBy:'name'"><a ng-click="selectLang(lang)" style="cursor: pointer;">{{lang.name}}</a></li>
+        </ul>
+    </div>
+</div>

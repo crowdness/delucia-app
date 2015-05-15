@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('deluciaApp')
-    .run(['$rootScope', '$location', 'Auth', '$modal', 'Ref', '$firebaseArray', '_', '$q',
-        function($rootScope, $location, Auth, $modal, Ref, $firebaseArray, _, $q) {
+    .run(['$rootScope', '$location', 'Auth', '$modal', 'Ref', '$firebaseArray', '_',
+        function($rootScope, $location, Auth, $modal, Ref, $firebaseArray, _) {
             $rootScope.location = $location;
             $rootScope.Auth = Auth;
             $rootScope.showSearchDialog = function() {
@@ -15,23 +15,6 @@ angular.module('deluciaApp')
                     q: q,
                     lang: lang.code
                 });
-            };
-            $rootScope.searchVideos = function(lang, q) {
-                q = q.toLowerCase();
-                var deferred = $q.defer();
-
-                $firebaseArray(Ref.child('lessons').orderByChild('languageCode').equalTo(lang.code)).$loaded(function(lessons) {
-                    deferred.resolve(_.filter(lessons, function(video) {
-                        return video.title.toLowerCase().indexOf(q) > -1;
-                    }));
-                });
-
-                return deferred.promise.then(function(lessons) {
-                    return lessons;
-                });
-            };
-            $rootScope.goToVideo = function(item) {
-                $location.url('/l/' + (item.parentId || item.$id) + '/' + item.languageCode);
             };
 
             $rootScope.languages = [{
