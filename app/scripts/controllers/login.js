@@ -7,7 +7,7 @@
  * Manages authentication to any active providers.
  */
 angular.module('deluciaApp')
-    .controller('LoginCtrl', function($scope, Auth, $location, $q, Ref, $timeout) {
+    .controller('LoginCtrl', function($scope, Auth, $location, $q, Ref, $timeout, $log) {
         $scope.oauthLogin = function(provider) {
             $scope.err = null;
             Auth.$authWithOAuthPopup(provider, {
@@ -79,7 +79,7 @@ angular.module('deluciaApp')
         }
 
         function createProfile(user) {
-            console.log(user);
+            $log.log(user);
             var ref = Ref.child('users').child(user.uid),
                 def = $q.defer();
             ref.set({
