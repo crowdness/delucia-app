@@ -9,11 +9,5 @@
  */
 angular.module('deluciaApp')
   .controller('MainCtrl', function ($scope, Ref, $firebaseArray) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
     $scope.lessons = $firebaseArray(Ref.child('lessons').orderByChild('createdAt').limitToLast(25));
   });

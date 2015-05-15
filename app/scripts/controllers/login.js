@@ -96,19 +96,6 @@ angular.module('deluciaApp')
             return def.promise;
         }
 
-        // function firstPartOfEmail(email) {
-        //     return ucfirst(email.substr(0, email.indexOf('@')) || '');
-        // }
-
-        // function ucfirst(str) {
-        //     // inspired by: http://kevin.vanzonneveld.net
-        //     str += '';
-        //     var f = str.charAt(0).toUpperCase();
-        //     return f + str.substr(1);
-        // }
-
-
-
         function redirect() {
             $location.path('/account');
         }
