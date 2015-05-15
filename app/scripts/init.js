@@ -5,18 +5,7 @@ angular.module('deluciaApp')
         function($rootScope, $location, Auth, $modal, Ref, $firebaseArray, _) {
             $rootScope.location = $location;
             $rootScope.Auth = Auth;
-            $rootScope.showSearchDialog = function() {
-                $modal.open({
-                    templateUrl: 'views/search-modal.html'
-                });
-            };
-            $rootScope.search = function(q, lang) {
-                $location.path('/search').search({
-                    q: q,
-                    lang: lang.code
-                });
-            };
-
+            
             $rootScope.languages = [{
                 code: 'en',
                 name: 'English'
