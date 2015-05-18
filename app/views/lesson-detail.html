@@ -16,9 +16,9 @@
             </div>
             <nav ng-show="videos">
                 <ul class="pager" style="margin-bottom: 0;">
-                    <li class="previous" ng-class="{disabled: previous() === activeVideo}"><a href="#{{previous()}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li class="previous" ng-class="{disabled: previous() === activeVideo}" ng-swipe-left="isActive(video)"><a href="#{{previous()}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
                     <li>Video {{videoIndex()}} of {{propCount(videos)}}</li>
-                    <li class="next" ng-class="{disabled: next() === activeVideo}"><a href="#{{next()}}">Next <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="next" ng-class="{disabled: next() === activeVideo}" ng-swipe-right="isActive(video)"><a href="#{{next()}}">Next <span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
             </nav>
             <div class="lead" ng-show="!videos" style="margin-bottom: 0;">
