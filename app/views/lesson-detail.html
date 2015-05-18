@@ -11,14 +11,14 @@
     </div>
     <div class="row" ng-if="languageCode">
         <div class="col-xs-12 col-sm-12">
-            <div ng-repeat="(user, video) in videos" class="embed-responsive embed-responsive-16by9" ng-show="isActive(video)">
+            <div ng-repeat="(user, video) in videos" ng-swipe-left="isActive(video)" class="embed-responsive embed-responsive-16by9" ng-show="isActive(video)">
                 <iframe ng-src="{{video.embedUrl}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
             <nav ng-show="videos">
                 <ul class="pager" style="margin-bottom: 0;">
-                    <li class="previous" ng-class="{disabled: previous() === activeVideo}" ng-swipe-left="isActive(video)"><a href="#{{previous()}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li class="previous" ng-class="{disabled: previous() === activeVideo}"><a href="#{{previous()}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
                     <li>Video {{videoIndex()}} of {{propCount(videos)}}</li>
-                    <li class="next" ng-class="{disabled: next() === activeVideo}" ng-swipe-right="isActive(video)"><a href="#{{next()}}">Next <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="next" ng-class="{disabled: next() === activeVideo}"><a href="#{{next()}}">Next <span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
             </nav>
             <div class="lead" ng-show="!videos" style="margin-bottom: 0;">
