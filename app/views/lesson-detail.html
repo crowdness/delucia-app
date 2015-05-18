@@ -11,7 +11,7 @@
     </div>
     <div class="row" ng-if="languageCode">
         <div class="col-xs-12 col-sm-12">
-            <div ng-repeat="(user, video) in videos" ng-swipe-left="isActive(video)" class="embed-responsive embed-responsive-16by9" ng-show="isActive(video)">
+            <div ng-repeat="(user, video) in videos" class="embed-responsive embed-responsive-16by9" ng-show="isActive(video)">
                 <iframe ng-src="{{video.embedUrl}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
             <nav ng-show="videos">
