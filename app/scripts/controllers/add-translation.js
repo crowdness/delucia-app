@@ -43,6 +43,7 @@ angular.module('deluciaApp')
                         return;
                     }
 
+                    $scope.lesson.language = angular.copy($scope.lesson.language); // angular adds $$hashKey param
                     $scope.parentLessonRef.child('translations').child($scope.lesson.languageCode).set($scope.lesson);
                     $scope.$apply(function() {
                         $location.path('/l/' + $scope.parentLesson.$id + '/' + $scope.lesson.languageCode);
